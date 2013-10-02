@@ -12,8 +12,13 @@ public class HumanPlayer extends Player {
   
   public Move getMove(Board b) {
     //TODO: allow the player to resign
-    int row = input.nextInt();
-    int column = input.nextInt();
+	System.out.print("Please enter row then column: ");
+    int row = input.nextInt() - 1;       
+    String sColumn = input.next();
+    
+    char cColumn[] = sColumn.toCharArray();
+    int column = ((int)cColumn[0] - 97);  //Translate char to int   
+    
     return new Move(row, column, this.color);
   }
 }
