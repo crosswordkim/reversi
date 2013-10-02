@@ -18,8 +18,14 @@ public class Move {
    */
   int rate(Board b) {
     Board temp = new Board();
-    b.clone(temp);
-    this.rating = temp.flip(this) + 1;  //Plus one because of the piece that is placed down.
+    b.clone(temp);    
+    int rawRating = temp.flip(this) + 1;  //Plus one because of the piece that is placed down.
+    if (b.SIZE == 8) {
+    	this.rating = rawRating * b.regionBias(row, column);
+    } else {
+    	this.rating = rawRating;
+    }
+    
     return this.rating;
   }
   
@@ -30,4 +36,3 @@ public class Move {
     return colorStr + " " + Integer.toString(row + 1) + "" + colChar;
   }
 }
-

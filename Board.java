@@ -16,6 +16,7 @@ public class Board {
   public static final int REGION_5_BIAS = 1;
   
   int[][] board;
+  int[][] biased;
 
   /**
    * Set up a blank board with four pieces in the center:
@@ -43,6 +44,36 @@ public class Board {
     board[center - 1][center - 1] = Game.WHITE;
     board[center - 1][center] = Game.BLACK;
     board[center][center - 1] = Game.BLACK;
+    
+    /**
+     * Region locations:
+     *    a b c d e f g h
+     * 1. 5 4 3 3 3 3 4 5
+     * 2. 4 4 2 2 2 2 4 4
+     * 3. 3 2 1 1 1 1 2 3
+     * 4. 3 2 1 1 1 1 2 3
+     * 5. 3 2 1 1 1 1 2 3
+     * 6. 3 2 1 1 1 1 2 3
+     * 7. 4 4 2 2 2 2 4 4
+     * 8. 5 4 3 3 3 3 4 5
+     * 
+     * @param row
+     * @param column
+     * @return
+     */
+    
+    if (SIZE == 8) {
+    	biased = new int[SIZE][SIZE];
+    	biased [0][0] = 5; biased [0][1] = 1; biased [0][2] = 4; biased [0][3] = 4; biased [0][4] = 4; biased [0][5] = 4; biased [0][6] = 1; biased [0][7] = 5;
+    	biased [1][0] = 1; biased [1][1] = 1; biased [1][2] = 2; biased [1][3] = 2; biased [1][4] = 2; biased [1][5] = 2; biased [1][6] = 1; biased [1][7] = 1;
+    	biased [2][0] = 4; biased [2][1] = 2; biased [2][2] = 3; biased [2][3] = 3; biased [2][4] = 3; biased [2][5] = 3; biased [2][6] = 2; biased [2][0] = 4;
+    	biased [3][0] = 4; biased [3][1] = 2; biased [3][2] = 3; biased [3][3] = 3; biased [3][4] = 3; biased [3][5] = 3; biased [3][6] = 2; biased [3][0] = 4;
+    	biased [4][0] = 4; biased [4][1] = 2; biased [4][2] = 3; biased [4][3] = 3; biased [4][4] = 3; biased [4][5] = 3; biased [4][6] = 2; biased [4][0] = 4;
+    	biased [5][0] = 4; biased [5][1] = 2; biased [5][2] = 3; biased [5][3] = 3; biased [5][4] = 3; biased [5][5] = 3; biased [5][6] = 2; biased [5][0] = 4;
+    	biased [6][0] = 1; biased [6][1] = 1; biased [6][2] = 2; biased [6][3] = 2; biased [6][4] = 2; biased [6][5] = 2; biased [6][6] = 1; biased [6][7] = 1;
+    	biased [7][0] = 5; biased [7][1] = 1; biased [7][2] = 4; biased [7][3] = 4; biased [7][4] = 4; biased [7][5] = 4; biased [7][6] = 1; biased [7][7] = 5;
+    }
+    
   }
   
   boolean set(Move m) {
@@ -244,9 +275,8 @@ public class Board {
    * @param column
    * @return
    */
-  public int regionBias(int row, int column) {
-    // TODO
-    return 1;
+  public int regionBias(int row, int column) {    
+    return biased[row][column];
   }
 
   /**
