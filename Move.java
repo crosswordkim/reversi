@@ -17,8 +17,10 @@ public class Move {
    * @return
    */
   int rate(Board b) {
-    
-    return 0;
+    Board temp = new Board();
+    b.clone(temp);
+    this.rating = temp.flip(this) + 1;  //Plus one because of the piece that is placed down.
+    return this.rating;
   }
   
   @Override
