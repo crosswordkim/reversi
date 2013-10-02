@@ -16,12 +16,15 @@ public class Game {
     case 0:
       player1 = new ComputerPlayer(BLACK);
       player2 = new ComputerPlayer(WHITE);
+      break;
     case 1:
       player1 = new HumanPlayer(BLACK);
       player2 = new ComputerPlayer(WHITE);
+      break;
     case 2:
       player1 = new HumanPlayer(BLACK);
       player2 = new HumanPlayer(WHITE);
+      break;
     }
   }
 
@@ -30,25 +33,34 @@ public class Game {
    */
   public void beginGame() {
     Player currentPlayer = player1;
-    while (board.existValidMove(currentPlayer.color)) {
+    while (board.existValidMove(currentPlayer.color)) {    	
       // display the board and scores
       System.out.println(board);
       System.out.println("BLACK: " + board.getScore(BLACK));
       System.out.println("WHITE: " + board.getScore(WHITE));
       
       // get the current player to decide a move
-      Move m = currentPlayer.getMove(board);
+      Move m = currentPlayer.getMove(board);      
       
       // put their piece on the board
-      board.makeMove(m);
+      boolean goodMove = board.makeMove(m);
+      
+      Player nextPlayer = (currentPlayer.color == WHITE) ? player1 : player2;
+      
+      if (!goodMove) {
+    	  System.out.println("Invalid Move.  Please Try again.");    	  
+      } else if (board.existValidMove(nextPlayer.color)) {
+    	  // switch to the other player
+          currentPlayer = nextPlayer;
+      } //Else repeat this persons turn.  
 
-      // switch to the other player
-      currentPlayer = (currentPlayer.color == WHITE) ? player1 : player2;
+      
     }
     
     // Decide who wins
+    System.out.println(board);
     int player1Score = board.getScore(BLACK);
-    int player2Score = board.getScore(BLACK);
+    int player2Score = board.getScore(WHITE);
     if (player1Score > player2Score) {
       System.out.println("Black wins!");
     } else if (player1Score < player2Score){
@@ -59,7 +71,7 @@ public class Game {
   }
 
   public static void main(String[] args) {
-    Game g = new Game(0);
+    Game g = new Game(1);
     g.beginGame();
   }
 }
