@@ -3,7 +3,7 @@ package reversi;
 import java.util.ArrayList;
 
 public class Board {
-  public static final int SIZE = 4;
+  public static final int SIZE = 8;
   
   public static final char WHITE = 'O';
   public static final char BLACK = 'X';
@@ -56,8 +56,54 @@ public class Board {
     return true;
   }
   
-  public void flip(Move m) {
-    // TODO
+  public int flip(Move m) {
+	  int flips = 0;
+	  
+	  if (traverse(m, -1, 0)) {
+		  flips += flipLine(m, -1, 0);
+	  }
+	  
+	  if (traverse(m, -1, 1)) {
+		  flips += flipLine(m, -1, 1);
+	  }
+	  
+	  if (traverse(m, 0, 1)) {
+		  flips += flipLine(m, 0, 1);
+	  }
+	  
+	  if (traverse(m, 1, 1)) {
+		  flips += flipLine(m, 1, 1);
+	  }
+	  
+	  if (traverse(m, 1, 0)) {
+		  flips += flipLine(m, 1, 0);
+	  }
+	  
+	  if (traverse(m, 1, -1)) {
+		  flips += flipLine(m, 1, -1);
+	  }
+	  
+	  if (traverse(m, 0, -1)) {
+		  flips += flipLine(m, 0, -1);
+	  }
+	  
+	  if (traverse(m, -1, -1)) {
+		  flips += flipLine(m, -1, -1);
+	  }
+	  return flips;
+  }
+  
+  public int flipLine (Move m, int rowDir, int colDir) {
+	  int flips = 0;
+	  int column = m.column + colDir;
+	  int row = m.row + rowDir;	  
+	  while (board[row][column] != m.color) {
+		  board[row][column] = m.color;
+		  column = column + colDir;
+		  row = row + rowDir;
+		  flips++;
+	  }
+	  return flips;
   }
   
   int get(int row, int col) {
@@ -65,7 +111,7 @@ public class Board {
     return board[row][col];
   }
   
-  public Move[] getValidMoves(int color) {
+  public ArrayList<Move> getValidMoves(int color) {
     ArrayList<Move> moves = new ArrayList<Move>();
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
@@ -75,7 +121,7 @@ public class Board {
         }
       }
     }
-    return (Move[]) moves.toArray();
+    return moves;
   }
   
   /**
@@ -101,6 +147,10 @@ public class Board {
    * @return
    */
   public boolean isValid(Move m) {
+	if (this.board[m.row][m.column] != 0) {
+		return false;
+	}
+	
     // Traverse in eight directions
     // +y |
     //    v
@@ -157,6 +207,7 @@ public class Board {
   public boolean makeMove(Move m) {
     if (isValid(m)) {
       set(m);
+      return true;
     }
     return false;
   }
@@ -225,5 +276,12 @@ public class Board {
     return n;
   }
 
+public void clone(Board otherBoard) {
+	for (int i = 0; i < SIZE; i++) {
+		for (int j = 0; j < SIZE; j++) {
+			otherBoard.board[i][j] = this.board[i][j];
+		}
+	}
+	
 }
-
+}
