@@ -1,5 +1,7 @@
 package reversi;
 
+import java.util.ArrayList;
+
 public abstract class Player {
   public int color;
   public Player(int c) {
@@ -7,8 +9,8 @@ public abstract class Player {
   }
   
   public Move getMove(Board b) {
-    Move[] validMoves = b.getValidMoves(color);
-    return validMoves[0];
+	ArrayList<Move> validMoves = b.getValidMoves(color);	
+    return validMoves.get(0);
   }
  
   public boolean hasMove(Board b) {
@@ -19,4 +21,5 @@ public abstract class Player {
     return Integer.toString(color);
   }
 }
+
 
